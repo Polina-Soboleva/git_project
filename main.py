@@ -3,20 +3,23 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-app_name = os.getenv("APP_NAME")
 api_key = os.getenv("API_KEY")
+app_name = os.getenv("APP_NAME")
 
-if not app_name and not api_key:
-    print("Error: APP_NAME and API_KEY environment variables are not set.")
-    exit(1)
+errors = []
 
 if not app_name:
-    print("Error: APP_NAME environment variable is not set.")
-    exit(1)
+    app_name = "git_project"
+    print("APP_NAME not set. Using default value: git_project")
+else:
+    print(f"Application: {app_name}")
 
 if not api_key:
-    print("Error: API_KEY environment variable is not set.")
+    errors.append("API_KEY is required")
+
+if errors:
+    for error in errors:
+        print(f"Error: {error}")
     exit(1)
 
-print(f"Application: {app_name}")
-print(f"API_KEY loaded: True")
+print("API_KEY loaded: True")
